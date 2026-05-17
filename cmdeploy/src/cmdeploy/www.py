@@ -15,6 +15,21 @@ _MERGE_CONFLICT_RE = re.compile(
     r"^<<<<<<<.+^=======.+^>>>>>>>", re.DOTALL | re.MULTILINE
 )
 
+_ANCHOR_RE = re.compile(r"<a\s+([^>]*?)>", re.IGNORECASE)
+_EXTERNAL_HREF_RE = re.compile(r"""href\s*=\s*["']https?://""", re.IGNORECASE)
+
+
+def externalize_links(html):
+    """Add target=_blank + rel=noopener to external <a> tags lacking target."""
+    def repl(m):
+        attrs = m.group(1)
+        if "target=" in attrs.lower():
+            return m.group(0)
+        if not _EXTERNAL_HREF_RE.search(attrs):
+            return m.group(0)
+        return f'<a {attrs} target="_blank" rel="noopener noreferrer">'
+    return _ANCHOR_RE.sub(repl, html)
+
 
 def snapshot_dir_stats(somedir):
     d = {}
@@ -103,7 +118,13 @@ def _build_webpages(src_dir, build_dir, config):
             render_vars["password_min_length"] = int_to_english(
                 config.password_min_length
             )
-            target = build_dir.joinpath(path.stem + ".html")
+            # invite page is served at /invite/ (no .html), so build it
+            # as invite/index.html; nginx try_files $uri/ + index does the rest.
+            if path.stem == "invite":
+                target = build_dir.joinpath("invite", "index.html")
+                target.parent.mkdir(exist_ok=True)
+            else:
+                target = build_dir.joinpath(path.stem + ".html")
 
             # recursive jinja2 rendering
             while 1:
@@ -113,7 +134,7 @@ def _build_webpages(src_dir, build_dir, config):
                 content = new
 
             with target.open("w") as f:
-                f.write(content)
+                f.write(externalize_links(content))
         elif path.name != "page-layout.html":
             target = build_dir.joinpath(path.name)
             target.write_bytes(path.read_bytes())

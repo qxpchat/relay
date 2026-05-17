@@ -1,38 +1,27 @@
+<div class="hero">
+  <img class="hero-img" src="/mock.png" alt="qxp screenshot" />
+  <div class="hero-actions">
+    <a class="cta-button cta-button--secondary" href="/signup.html">Get a @qxp.chat profile</a>
+    <a class="cta-button" href="https://github.com/qxpchat/qxp/releases/latest">DOWNLOAD</a>
+  </div>
+</div>
 
-<img class="banner" src="collage-top.png"/>
+# qxp
 
-## Dear [Delta Chat](https://get.delta.chat) users and newcomers ... 
+qxp is an instant messaging app built on the standard email protocol. It is a chatmail client — one of many compatible [clients](https://chatmail.at/clients). Messages are end-to-end encrypted and kept only on your devices after delivery.
 
-{% if config.mail_domain != "nine.testrun.org" %}
-Welcome to instant, interoperable and [privacy-preserving](privacy.html) messaging :) 
-{% else %}
-Welcome to the default onboarding server ({{ config.mail_domain }}) 
-for Delta Chat users.  For details how it avoids storing personal information
-please see our [privacy policy](privacy.html). 
-{% endif %}
+## Chatmail
 
-{% if config.tls_cert_mode == "self" %}
-<a class="cta-button" id="dclogin-link" href="#">Get a {{config.mail_domain}} chat profile</a>
+[Chatmail](https://chatmail.at/) is a network of email servers that powers real-time messaging in clients like qxp. The servers act only as relays: messages are removed once delivered, and within {{ config.delete_mails_after }} days even if they aren't. You can add multiple [relays](https://chatmail.at/relays) — qxp checks all of them, so you stay reachable even if one goes offline.
 
-If you are viewing this page on a different device
-without a Delta Chat app,
-you can also **scan this QR code** with Delta Chat:
+## Email protocol
 
-<a id="qr-link" href="#"><div id="qr-code"></div></a>
+Any chatmail client works with any chatmail relay. You can switch to a different client or relay at any time, without depending on a single company, server, or developer team.
 
-<script src="qrcode-svg.min.js"></script>
-<script src="dclogin.js"></script>
-{% else %}
-<a class="cta-button" href="DCACCOUNT:https://{{ config.mail_domain }}/new">Get a {{config.mail_domain}} chat profile</a>
+## Acknowledgements
 
-If you are viewing this page on a different device
-without a Delta Chat app,
-you can also **scan this QR code** with Delta Chat:
+We sincerely thank everyone who develops, maintains, funds and supports the chatmail protocol. Your work and dedication bring freedom of communication to everyone.
 
-<a href="DCACCOUNT:https://{{ config.mail_domain }}/new">
-    <img width=300 style="float: none;" src="qr-chatmail-invite-{{config.mail_domain}}.png" /></a>
-{% endif %}
+## Swiss Relay 🇨🇭
 
-🐣 **Choose** your Avatar and Name
-
-💬 **Start** chatting with any Delta Chat contacts using [QR invite codes](https://delta.chat/en/help#howtoe2ee)
+qxp.chat operates a relay hosted in [Geneva, Switzerland](https://ipinfo.io/83.228.240.82), under Swiss data-protection law.

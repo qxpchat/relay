@@ -37,9 +37,6 @@ def gen_qr(maildomain, url):
     ttf_path = str(
         importlib.resources.files(__package__).joinpath("data/opensans-regular.ttf")
     )
-    logo_red_path = str(
-        importlib.resources.files(__package__).joinpath("data/delta-chat-bw.png")
-    )
 
     assert os.path.exists(ttf_path), ttf_path
     font_size = 16
@@ -78,11 +75,19 @@ def gen_qr(maildomain, url):
         (qr_padding, qr_padding),
     )
 
-    # background delta logo
-    logo2_img = Image.open(logo_red_path)
-    logo2_width = int(size / 6)
-    logo2 = logo2_img.resize((logo2_width, logo2_width), resample=Image.NEAREST)
-    pos = int((size / 2) - (logo2_width / 2))
-    image.paste(logo2, (pos, pos), mask=logo2)
+    # center chatmail "@" logo on a white card so it stays scannable
+    logo_size = int(size / 6)
+    logo = Image.new("RGBA", (logo_size, logo_size), (255, 255, 255, 255))
+    logo_draw = ImageDraw.Draw(logo)
+    logo_font = ImageFont.truetype(font=ttf_path, size=int(logo_size * 0.85))
+    logo_draw.text(
+        (logo_size // 2, logo_size // 2),
+        "@",
+        anchor="mm",
+        font=logo_font,
+        fill="black",
+    )
+    pos = int((size / 2) - (logo_size / 2))
+    image.paste(logo, (pos, pos), mask=logo)
 
     return image

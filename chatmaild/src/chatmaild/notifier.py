@@ -68,7 +68,7 @@ class PersistentQueueItem:
 
 
 class Notifier:
-    URL = "https://notifications.delta.chat/notify"
+    URL = "https://notifications.qxp.chat/notify"
     CONNECTION_TIMEOUT = 60.0  # seconds until http-request is given up
     BASE_DELAY = 8.0  # base seconds for exponential back-off delay
     DROP_DEADLINE = 5 * 60 * 60  #  drop notifications after 5 hours

@@ -1,27 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     {% if config.webdev %}
     <meta http-equiv="refresh" content="3">
     {% endif %}
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <title>{{ config.mail_domain }} {{ pagename }}</title>
-    <link rel="stylesheet" href="./main.css">
-    <link rel="icon" href="/logo.svg">
-    <link rel=”mask-icon” href=”/logo.svg” color=”#000000">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0d0d0d">
+    <title>{{ config.mail_domain }} — {{ pagename }}</title>
+    <link rel="icon" href="/logo.svg" type="image/svg+xml">
+    <link rel="mask-icon" href="/logo.svg" color="#22ccaa">
+    <link rel="stylesheet" href="/main.css">
 </head>
 <body>
 
-<ul id="menu">
-    <li><a href="index.html">home</a></li>
-    <li><a href="info.html">info</a></li>
-    <li><a href="privacy.html">privacy</a></li>
-    <li><a href="https://github.com/deltachat/chatmail">public code ↗</a></li>
-    <li id="domain"><a href="index.html">{{ config.mail_domain }}</a></li>
-</ul>
+<header>
+    <a href="/" aria-label="home">
+        <img class="logo" src="/logo.svg" alt="" width="36" height="36" />
+        <span class="wordmark">{{ config.mail_domain }}</span>
+    </a>
+    <nav>
+        <a href="/">home</a>
+        <a href="/signup.html">relay</a>
+        <a href="/privacy.html">privacy</a>
+    </nav>
+</header>
 
+<main>
 {{ markdown_html }}
+</main>
+
+<footer>
+    <a href="https://github.com/qxpchat/qxp" target="_blank" rel="noopener">GitHub ↗</a>
+    <span class="swiss">MADE IN SWITZERLAND 🇨🇭</span>
+</footer>
 
 </body>
 </html>
